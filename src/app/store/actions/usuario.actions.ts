@@ -1,4 +1,4 @@
-import { Action } from '@ngrx/store'
+/* import { Action } from '@ngrx/store'
 import { Usuario } from '../../models/usuario.model';
 
 
@@ -28,4 +28,20 @@ export class CargarUsuarioSuccess implements Action {
 }
 
 export type usuarioAcciones = CargarUsuario | CargarUsuarioFail | CargarUsuarioSuccess;
+ */
 
+import { createAction, props } from '@ngrx/store';
+import { Usuario } from 'src/app/models/usuario.model';
+
+export const cargarUsuario = createAction(
+    '[Usuario] CargarUsuario',
+    props<{id:string}>()
+);
+export const cargarUsuarioSuccess = createAction(
+    '[Usuarios] Cargar Usuarios Success',
+    props<{ usuario:Usuario }>()
+);
+export const cargarUsuarioError = createAction(
+    '[Usuarios] Cargar Usuarios Error',
+    props<{ payload:any }>()
+);

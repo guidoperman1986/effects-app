@@ -1,9 +1,9 @@
-import { Usuario } from '../../models/usuario.model';
+/* import { Usuario } from '../../models/usuario.model';
 import * as fromUsuario from '../actions/index'
 
-//Los primeros pasos son los que estan en el archivo usuarios.actions.ts
+//Los primeros pasos son los que estan en el archivo usuario.actions.ts
 //3: defino el estado de la aplicacion
-export interface UsuarioState {
+export interface Usuariotate {
     user: Usuario
     loaded:boolean;
     loading:boolean;
@@ -11,7 +11,7 @@ export interface UsuarioState {
 }
 
 //4: creo el estado inicial de la app
-const estadoInicial: UsuarioState = {
+const estadoInicial: Usuariotate = {
     user:null,
     loaded:false,
     loading:false,
@@ -20,7 +20,7 @@ const estadoInicial: UsuarioState = {
 }
 
 //5: Defino el reducer
-export function usuarioReducer (state=estadoInicial, action: fromUsuario.usuarioAcciones):UsuarioState{
+export function usuarioReducer (state=estadoInicial, action: fromUsuario.usuarioAcciones):Usuariotate{
 
     switch (action.type){
         case fromUsuario.CARGAR_USUARIO:
@@ -55,3 +55,49 @@ export function usuarioReducer (state=estadoInicial, action: fromUsuario.usuario
     }
 
 }
+ */
+
+import { createReducer, on } from '@ngrx/store';
+import { cargarUsuarioError,cargarUsuarioSuccess, cargarUsuario } from '../actions';
+import { Usuario } from 'src/app/models/usuario.model';
+
+export interface UsuarioState {
+    id: string,
+    user: Usuario[],
+    loaded:boolean,
+    loading: boolean,
+    error:any
+}
+
+export const usuarioInitialState: UsuarioState = {
+    id: null,
+    user: null, 
+    loaded: false,
+    loading: false,
+    error: null
+}
+
+const _usuarioReducer = createReducer(usuarioInitialState,
+
+    on(cargarUsuario, (state, {id}) => ({ ...state, loading:true, id:id})),
+    on(cargarUsuarioSuccess, (state, {usuario}) => ({ 
+            ...state, 
+            loading:false,
+            loaded:true,
+            users:{...usuario}
+        })
+    ),
+    on(cargarUsuarioError,(state, {payload})=>({
+            ...state, 
+            loading:false,
+            loaded:true,        
+            error:payload
+        })
+    )
+
+);
+
+export function usuarioReducer(state, action) {
+    return _usuarioReducer(state, action);
+}
+

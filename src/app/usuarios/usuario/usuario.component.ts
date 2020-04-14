@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.reducer';
 import * as usuarioActions from '../../store/actions';
 import { Usuario } from '../../models/usuario.model';
+import { cargarUsuario } from '../../store/actions';
 
 @Component({
   selector: 'app-usuario',
@@ -21,8 +22,7 @@ export class UsuarioComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.params.subscribe(params=>{
       const id = params['id'];
-
-      this.store.dispatch(new usuarioActions.CargarUsuario(id));
+      this.store.dispatch(cargarUsuario({id}));
 
     })
 

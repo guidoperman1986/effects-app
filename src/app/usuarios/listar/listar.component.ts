@@ -23,7 +23,8 @@ export class ListarComponent implements OnInit {
       this.usuarios = users;
     }) */
 
-    this.store.dispatch(new usuariosActions.CargarUsuarios())
+    //this.store.dispatch(new usuariosActions.CargarUsuarios())
+    this.store.dispatch(usuariosActions.cargarUsuarios());
 
     this.store.select('usuarios').subscribe(users=>{
       this.usuarios = users.users;

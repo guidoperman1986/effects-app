@@ -6,7 +6,6 @@ import { ActionReducerMap } from '@ngrx/store'
 export interface AppState {
     usuarios:reducers.UsuariosState,
     usuario:reducers.UsuarioState
-
 }
 
 //7:action reducer map que es donde se combinan todos los reducers

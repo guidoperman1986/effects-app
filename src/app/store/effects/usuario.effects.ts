@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 
-import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Actions, Effect, ofType, createEffect } from '@ngrx/effects';
 
 import { of } from 'rxjs' //el of permite convertir algo en un observable
 import * as usuarioActions from '../actions'
 import { Observable } from 'rxjs/internal/Observable';
 import { Action } from '@ngrx/store';
-import { map,tap, switchMap, mapTo, catchError } from 'rxjs/operators';
+import { map,tap, switchMap, mapTo, catchError, mergeMap } from 'rxjs/operators';
 import { UsuarioService } from '../../services/usuario.service';
+import { cargarUsuario, cargarUsuarioSuccess, cargarUsuarioError } from '../actions';
 
 @Injectable()
 export class UsuarioEffects {
@@ -18,7 +19,7 @@ export class UsuarioEffects {
     //@Effect()
     //cargarUsuarios$ = this.actions$.ofType(usuariosActions.CARGAR_USUARIOS)
 
-    @Effect()
+    /* @Effect()
     cargarusuario$: Observable<Action> = this.actions$.pipe(
             ofType(usuarioActions.CARGAR_USUARIO),    
             switchMap(action=>{
@@ -34,6 +35,26 @@ export class UsuarioEffects {
             })
 
 
+    ) */
+
+    cargarusuario$ = createEffect(
+        ()=>this.actions$.pipe(
+            ofType(cargarUsuario),
+            mergeMap(
+                (action)=>
+                    
+                    this.usuarioService.getUserById(action.id)
+                        .pipe(
+                            tap(
+                                data=>console.log('getuser Effect',data)                                
+                            ),
+                            map(user=>cargarUsuarioSuccess({usuario:user})),
+                            catchError(err=>of(cargarUsuarioError({payload:err})))
+                        )
+                    
+            )
+
+        )
     )
 
     
