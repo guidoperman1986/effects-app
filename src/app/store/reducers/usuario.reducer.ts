@@ -62,42 +62,51 @@ import { cargarUsuarioError,cargarUsuarioSuccess, cargarUsuario } from '../actio
 import { Usuario } from 'src/app/models/usuario.model';
 
 export interface UsuarioState {
-    id: string,
-    user: Usuario[],
-    loaded:boolean,
+    id     : string,
+    user   : Usuario,
+    loaded :boolean,
     loading: boolean,
-    error:any
+    error  :any
 }
 
-export const usuarioInitialState: UsuarioState = {
-    id: null,
-    user: null, 
-    loaded: false,
+export const UsuarioInitialState: UsuarioState = {
+    id     : null,
+    user   : null, 
+    loaded : false,
     loading: false,
-    error: null
+    error  : null
 }
 
-const _usuarioReducer = createReducer(usuarioInitialState,
+const _UsuarioReducer = createReducer(UsuarioInitialState,
 
-    on(cargarUsuario, (state, {id}) => ({ ...state, loading:true, id:id})),
+    on(cargarUsuario, (state, {id}) => ({ 
+        ...state, 
+        loading:true, 
+        id:id
+    })),
+
     on(cargarUsuarioSuccess, (state, {usuario}) => ({ 
             ...state, 
             loading:false,
             loaded:true,
-            users:{...usuario}
+            user: {...usuario}
         })
     ),
     on(cargarUsuarioError,(state, {payload})=>({
             ...state, 
-            loading:false,
-            loaded:true,        
-            error:payload
+            loading: false,
+            loaded: false,
+            error: {
+                url: payload.url,
+                name: payload.name,
+                message: payload.message
+            }
         })
     )
 
 );
 
 export function usuarioReducer(state, action) {
-    return _usuarioReducer(state, action);
+    return _UsuarioReducer(state, action);
 }
 

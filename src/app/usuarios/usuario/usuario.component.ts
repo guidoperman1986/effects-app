@@ -21,7 +21,7 @@ export class UsuarioComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params=>{
-      const id = params['id'];
+      const id = params['id'];      
       this.store.dispatch(cargarUsuario({id}));
 
     })

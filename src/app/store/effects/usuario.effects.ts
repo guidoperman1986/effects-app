@@ -48,7 +48,7 @@ export class UsuarioEffects {
                             tap(
                                 data=>console.log('getuser Effect',data)                                
                             ),
-                            map(user=>cargarUsuarioSuccess({usuario:user})),
+                            map(usuario=>cargarUsuarioSuccess({usuario})),
                             catchError(err=>of(cargarUsuarioError({payload:err})))
                         )
                     

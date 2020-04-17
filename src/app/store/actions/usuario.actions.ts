@@ -34,14 +34,14 @@ import { createAction, props } from '@ngrx/store';
 import { Usuario } from 'src/app/models/usuario.model';
 
 export const cargarUsuario = createAction(
-    '[Usuario] CargarUsuario',
+    '[Usuario] Cargar Usuario',
     props<{id:string}>()
 );
 export const cargarUsuarioSuccess = createAction(
-    '[Usuarios] Cargar Usuarios Success',
+    '[Usuarios] Cargar Usuario Success',
     props<{ usuario:Usuario }>()
 );
 export const cargarUsuarioError = createAction(
-    '[Usuarios] Cargar Usuarios Error',
+    '[Usuarios] Cargar Usuario Error',
     props<{ payload:any }>()
 );
